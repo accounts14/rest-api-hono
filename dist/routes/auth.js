@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
-import { prisma } from '../db';
+import { prisma } from '../db.js';
 import * as bcrypt from 'bcryptjs';
-import { generateToken } from '../utils/jwt';
+import { generateToken } from '../utils/jwt.js';
 const authApp = new Hono();
 authApp.post('/register', async (c) => {
     const { email, password, name } = await c.req.json();

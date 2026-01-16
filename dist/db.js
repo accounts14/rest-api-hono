@@ -1,7 +1,18 @@
-import { PrismaClient } from '../generated/prisma';
-const globalForPrisma = globalThis;
-export const prisma = globalForPrisma.prisma ??
-    new PrismaClient();
-if (process.env.NODE_ENV !== 'production') {
-    globalForPrisma.prisma = prisma;
+import { PrismaClient } from '../generated/prisma/index.js';
+import { PrismaPg } from '@prisma/adapter-pg';
+import 'dotenv/config';
+const databaseUrl = process.env.DATABASE_URL;
+if (!databaseUrl) {
+    throw new Error('❌ DATABASE_URL is missing in .env');
 }
+// Buat adapter
+const adapter = new PrismaPg({
+    connectionString: databaseUrl,
+});
+const globalForPrisma = global;
+export const prisma = globalForPrisma.prisma ||
+    new PrismaClient({
+        adapter, // ← Lewatkan adapter ke PrismaClient
+    });
+if (process.env.NODE_ENV !== 'production')
+    globalForPrisma.prisma = prisma;
