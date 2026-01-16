@@ -13,4 +13,9 @@ note : di postman bagian header ditambahkan
 -key : Authorization
 -valuenya : Bearer token_login
 
-note tambahan : isi di body di raw 
+note tambahan : isi di body di raw contoh isi
+{
+    "email"    : "admin@gmail.com",
+    "password" : "admin123",
+    "name" : "admin123"
+}
